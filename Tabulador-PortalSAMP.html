@@ -171,14 +171,18 @@
             }
         }
     </style>
+    <!-- SweetAlert2 CDN for nicer alerts when errors occur -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
     <div class="container">
         <header>
             <div style="display:flex;align-items:center;gap:12px;width:100%;">
-                <img class="site-logo" src="https://i.imgur.com/gRMs3Hp.png" alt="Portal SAMP Logo"
+                   <a href="https://portalsamp.com" target="_blank" rel="noopener noreferrer">
+                       <img class="site-logo" src="https://i.imgur.com/gRMs3Hp.png" alt="Portal SAMP Logo"
                     onerror="this.style.display='none'">
+                   </a>
                 <div class="header-center">
                     <div class="logo">Portal SAMP</div>
                     <div class="subtitle">Tabulador e Analisador de Códigos — estilo Portal SAMP</div>
@@ -354,13 +358,24 @@
             let ultimobrack = 0;
 
             function terminarOrig(bckVal) {
-                if (bckVal) {
-                    alert('Existem { demais no código');
-                    try { alert('O erro foi encontrado antes da linha ' + (ultimobrack - 1)); } catch (e) { }
-                } else {
+                function finish() {
+                    output.value = impressaofinal;
+                    status.textContent = 'Finalizado !!';
                 }
-                output.value = impressaofinal;
-                status.textContent = 'Finalizado !!';
+
+                if (bckVal) {
+                    // show the main error, then attempt to show the approximate line where it occurred,
+                    // then finish (this mirrors the blocking alert() behavior using promise chaining)
+                    Swal.fire({ icon: 'error', title: 'Erro', text: 'Existem { demais no código' })
+                        .then(() => {
+                            try {
+                                return Swal.fire({ icon: 'error', title: 'Erro', text: 'O erro foi encontrado antes da linha ' + (ultimobrack - 1) });
+                            } catch (e) { return null; }
+                        })
+                        .then(finish);
+                } else {
+                    finish();
+                }
             }
 
             function processarOrig() {
@@ -388,9 +403,14 @@
                     }
 
                     if (bck < 0) {
-                        alert('Existem } demais no código');
-                        alert('O processo foi parado proximo a linha que houve o erro');
-                        terminarOrig(0);
+                        // combine the messages into a single modal and when dismissed, terminate the process
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erro',
+                            text: 'Existem } demais no código\nO processo foi parado próximo à linha que houve o erro'
+                        }).then(() => {
+                            terminarOrig(0);
+                        });
                         return;
                     }
 
