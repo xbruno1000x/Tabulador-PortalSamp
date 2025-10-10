@@ -20,7 +20,16 @@
                    </a>
                 <div class="header-center">
                     <div class="logo">Portal SAMP</div>
-                    <div class="subtitle">Tabulador e Analisador de Códigos — Portal SAMP</div>
+                    <div class="subtitle" data-i18n="subtitle">Tabulador e Analisador de Códigos — Portal SAMP</div>
+                </div>
+                <!-- Language selector -->
+                <div style="margin-left:8px;align-self:center;z-index:2;position:relative;">
+                    <label for="langSelect" style="display:none">Language</label>
+                    <select id="langSelect" aria-label="Language selector">
+                        <option value="pt">🇧🇷 PT</option>
+                        <option value="en">🇬🇧 EN</option>
+                        <option value="es">🇪🇸 ES</option>
+                    </select>
                 </div>
                 <img class="site-banner" src="https://i.imgur.com/BMJVhAE.png" alt="Portal SAMP Banner"
                     onerror="this.style.display='none'">
@@ -33,11 +42,11 @@
                     <button id="analyzeBtn">Analisar</button>
                     <button id="clearBtn" class="secondary">Limpar</button>
                     <div style="flex:1"></div>
-                    <div class="status" id="status">Cole seu código à esquerda e clique em Analisar</div>
+                    <div class="status" id="status"></div>
                 </div>
 
                 <textarea id="inputArea"
-                    placeholder="Cole seu código aqui... Suporta PAWN / C / JavaScript — identa por chaves {}"></textarea>
+                    placeholder=""></textarea>
             </section>
 
             <section class="panel">
@@ -51,13 +60,13 @@
                     <button id="downloadBtn" class="secondary">Baixar</button>
                 </div>
 
-                <textarea id="outputArea" placeholder="Código identado aparecerá aqui..." readonly></textarea>
+                <textarea id="outputArea" placeholder="" data-i18n-placeholder="outputPlaceholder" readonly></textarea>
             </section>
         </main>
 
         <div class="footer">
-            <div class="note">Detecta chaves { e } e tenta indentar corretamente. Exibe erros com a linha responsável.</div>
-            <div style="color:var(--muted);font-size:13px">Por <a href="https://portalsamp.com/member.php?action=profile&uid=84" target="_blank" rel="noopener noreferrer"><strong>xBruno1000x</strong></a> Portal SAMP — baseado em Tabulador iPs Team</div>
+            <div class="note" data-i18n="note">Detecta chaves { e } e tenta indentar corretamente. Exibe erros com a linha responsável.</div>
+            <div style="color:var(--muted);font-size:13px"><span data-i18n="footer_prefix">Por </span><a href="https://portalsamp.com/member.php?action=profile&uid=84" target="_blank" rel="noopener noreferrer"><strong>xBruno1000x</strong></a><span data-i18n="footer_suffix"> Portal SAMP — baseado em Tabulador iPs Team</span></div>
         </div>
     </div>
 

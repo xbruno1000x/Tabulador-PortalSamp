@@ -34,14 +34,59 @@ header {
     align-items: center;
     gap: 12px;
     padding: 12px 16px;
-    background: linear-gradient(90deg, var(--panel), #06202f)
+    background: linear-gradient(90deg, var(--panel), #06202f);
+    position: relative; 
 }
 
 .site-banner {
-    height: 56px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    border-radius: 0;
+    z-index: 0;
+}
+
+header > div {
+    position: relative;
+}
+
+.site-logo,
+.header-center {
+    position: relative;
+    z-index: 2;
+}
+
+/* Language selector styling */
+#langSelect {
+    background: rgba(0,0,0,0.35);
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 6px 8px;
     border-radius: 6px;
-    max-width: 360px
+    font-weight: 600;
+    font-size: 13px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+/* Small wrapper to provide a custom caret using a pseudo-element on the parent */
+div[style*="margin-left:8px"] { position: relative; }
+div[style*="margin-left:8px"]::after {
+    content: '\25BE';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.7);
+    pointer-events: none;
+    z-index: 3;
 }
 
 .site-logo {
@@ -71,11 +116,21 @@ header {
 }
 
 .subtitle {
-    color: var(--muted);
+    color: whitesmoke;
     font-size: 14px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis
+}
+
+.logo,
+.subtitle {
+    text-shadow:
+        1px 1px 0 rgba(0,0,0,0.9),
+        -1px 1px 0 rgba(0,0,0,0.9),
+        1px -1px 0 rgba(0,0,0,0.9),
+        -1px -1px 0 rgba(0,0,0,0.9);
+    -webkit-text-stroke: 0.1px rgba(0,0,0,0.95);
 }
 
 main {
@@ -163,7 +218,6 @@ canvas {
     }
 }
 
-/* Footer author link: remove underline and keep same color */
 .footer a {
     text-decoration: none;
     color: inherit;
