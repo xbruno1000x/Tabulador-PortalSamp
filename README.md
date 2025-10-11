@@ -1,86 +1,89 @@
-# Tabulador-PortalSamp
+# Tabulador e Analisador de Códigos - Portal SAMP
 
-Um pequeno projeto frontend estático para o Tabulador do Portal Samp.
+Um tabulador e analisador de código front-end estático, moderno e interativo, projetado para a comunidade do Portal SAMP. Esta ferramenta facilita a formatação e a verificação de código PAWN, C e JavaScript diretamente no navegador.
 
-> Este repositório contém uma página estática (HTML/CSS/JS) construída para facilitar a visualização e interação com o Tabulador do Portal Samp.
+## Funcionalidades
 
-## Conteúdo
+- **Formatação de Código**: Indenta o código automaticamente com base em chaves (`{` e `}`).
+- **Análise e Detecção de Erros**: Identifica erros de sintaxe comuns, como chaves desbalanceadas, e aponta a linha do erro.
+- **Interface Moderna**: UI limpa e responsiva com temas claro e escuro.
+- **Suporte Multilíngue**: Disponível em Português, Inglês e Espanhol.
+- **Realce de Sintaxe (implícito)**: A estrutura com números de linha e a fonte monoespaçada facilitam a leitura do código.
+- **Download do Código**: Permite baixar o código formatado como um arquivo de texto.
 
-- `index.html` - Página principal.
-- `app.js` - Lógica JavaScript do projeto.
-- `styles.css` - Estilos CSS.
-- `images/` - Imagens usadas na página.
+## Tecnologias Utilizadas
 
-## Pré-requisitos
+- **HTML5**
+- **CSS3**: Organizado em módulos para `base`, `layout`, `componentes` e `temas`.
+- **JavaScript (ES6+ Modules)**: Lógica modular para `análise de código`, `controle de UI`, `tradução` e `gerenciamento de tema`.
+- **Font Awesome**: Para ícones.
+- **SweetAlert2**: Para notificações e alertas.
 
-Você só precisa de um navegador moderno. Para desenvolvimento local, é recomendado usar um servidor HTTP estático (evita problemas com CORS e módulos ES).
+## Estrutura do Projeto
 
-### Servidores simples recomendados
+O projeto é organizado da seguinte forma:
 
-- Python 3.x: `python -m http.server 8000`
-- Node.js (serve): `npx serve .`
+- `index.html`: A página principal da aplicação.
+- `css/`: Contém os arquivos de estilo:
+   - `base.css`: Estilos globais e reset.
+   - `layout.css`: Estrutura principal da página.
+   - `components.css`: Estilos para componentes como botões, painéis e textareas.
+   - `theme.css`: Variáveis e estilos para os temas claro e escuro.
+- `js/`: Contém a lógica JavaScript:
+   - `main.js`: Ponto de entrada da aplicação, orquestra os outros módulos.
+   - `code_analyzer.js`: O coração da ferramenta, responsável por analisar e formatar o código.
+   - `ui_controller.js`: Gerencia todas as interações e atualizações da interface do usuário.
+   - `translator.js`: Cuida da internacionalização e da troca de idiomas.
+   - `theme.js`: Gerencia a troca entre os temas claro e escuro.
+- `images/`: Contém as imagens utilizadas na interface.
+- `translations/`: Arquivos JSON com as traduções para os idiomas suportados (pt, en, es).
 
-Execute o comando na raiz do projeto.
+## Como Rodar Localmente
 
-## Como rodar localmente
+Para executar o projeto localmente, você precisará de um servidor web estático para evitar problemas com CORS ao carregar os módulos JavaScript.
 
-1. Abra um terminal na pasta do projeto.
-2. Rode um servidor estático (ex.: `python -m http.server 8000`).
-3. Abra `http://localhost:8000` no seu navegador.
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/seu-usuario/Tabulador-PortalSamp.git
+   cd Tabulador-PortalSamp
+   ```
+
+2. **Inicie um servidor local:**
+   - Se você usa o **Visual Studio Code** com a extensão [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer):
+      - Abra a pasta do projeto no VS Code.
+      - Clique com o botão direito no arquivo `index.html` e selecione "Open with Live Server" (ou clique em "Go Live" no canto inferior direito).
+   - Se você tem o **Python 3** instalado:
+      ```bash
+      python -m http.server
+      ```
+   - Se você tem o **Node.js** instalado, pode usar o pacote `serve`:
+      ```bash
+      npx serve
+      ```
+
+3. **Abra no navegador:**
+   - Acesse `http://localhost:8000` (ou a porta que o seu servidor indicar).
 
 ## Deploy (GitHub Pages)
 
-Este repositório já pode ser publicado via GitHub Pages na branch `gh-pages` ou na configuração de Pages do repositório.
+Este projeto está pronto para ser publicado no GitHub Pages.
 
-Passos rápidos:
+1. Faça o push do seu código para a branch `main` ou `gh-pages`.
+2. No seu repositório no GitHub, vá para `Settings` > `Pages`.
+3. Em `Branch`, selecione a branch que você usou e clique em `Save`.
+4. Aguarde alguns minutos e sua página estará no ar.
 
-1. Commit e push na branch `gh-pages`.
-2. No GitHub, abra as configurações do repositório → Pages → selecione a branch `gh-pages` (ou `main`/`master`) e salve.
-3. Aguarde alguns minutos e acesse a URL indicada.
+## Como Contribuir
 
-## Estrutura do projeto
+Contribuições são bem-vindas! Se você tiver ideias para novas funcionalidades ou encontrar um bug, siga os passos abaixo:
 
-```
-index.html
-app.js
-styles.css
-images/
-README.md
-```
-
-## Como contribuir
-
-- Abra uma issue para discutir mudanças.
-- Faça um fork, crie uma branch com a feature/bugfix e envie um Pull Request.
+1. Abra uma **Issue** para discutir a mudança que você deseja fazer.
+2. Faça um **Fork** do projeto.
+3. Crie uma nova **Branch** para sua feature (`git checkout -b feature/nova-feature`).
+4. Faça o **Commit** de suas mudanças (`git commit -m 'Adiciona nova feature'`).
+5. Faça o **Push** para a sua branch (`git push origin feature/nova-feature`).
+6. Abra um **Pull Request**.
 
 ## Licença
 
-Este projeto está licenciado sob a Licença MIT. Consulte o arquivo `LICENSE` na raiz do repositório para o texto completo.
-
-SPDX: MIT
-
-## Commit e deploy (exemplos - PowerShell)
-
-Comandos básicos para commitar e enviar suas alterações ao GitHub (Windows PowerShell):
-
-```powershell
-# criar branch (opcional)
-git checkout -b feat/readme
-
-# adicionar alterações
-git add README.md
-
-# criar commit
-git commit -m "docs: adicionar README do projeto"
-
-# enviar para o remoto
-git push -u origin feat/readme
-```
-
-Se você preferir commitar direto na `gh-pages` (atenção: sobrescreve histórico localmente se a branch divergir):
-
-```powershell
-git add .
-git commit -m "docs: adicionar README"
-git push origin gh-pages
-```
+Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
