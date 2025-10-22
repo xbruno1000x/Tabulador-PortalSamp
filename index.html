@@ -1,76 +1,136 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Tabulador — Portal SAMP</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="./images/logo.png" type="image/png" width="32" height="32" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title data-i18n="title">Tabulador - Portal SAMP</title>
+    <meta name="description" content="">
+
+    <script>
+        (function() {
+            const saved_theme = localStorage.getItem('theme') || 'dark';
+
+            if (saved_theme === 'light')
+                document.documentElement.classList.add('light-theme');
+        })();
+    </script>
+
+    <link rel="icon" href="./images/logo.png" type="image/png" width="32" height="32">
+
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-
 <body>
     <div class="container">
         <header>
-            <div style="display:flex;align-items:center;gap:12px;width:100%;">
-                   <a href="https://portalsamp.com" target="_blank" rel="noopener noreferrer">
-                       <img class="site-logo" src="./images/logo.png" alt="Portal SAMP Logo"
-                    onerror="this.style.display='none'">
-                   </a>
+            <div class="header-content">
+                <a href="https://portalsamp.com" target="_blank" rel="noopener noreferrer" class="logo-link">
+                    <img class="site-logo" src="./images/logo.png" alt="" onerror="this.style.display='none'">
+                </a>
                 <div class="header-center">
                     <div class="logo">Portal SAMP</div>
                     <div class="subtitle" data-i18n="subtitle">Tabulador e Analisador de Códigos — Portal SAMP</div>
                 </div>
-                <!-- Language selector -->
-                <div style="margin-left:8px;align-self:center;z-index:2;position:relative;">
-                    <label for="langSelect" style="display:none">Language</label>
-                    <select id="langSelect" aria-label="Language selector">
+                <div class="header-controls">
+                    <label for="lang-select" class="visually-hidden" data-i18n="lang_select_label">Language</label>
+                    <select id="lang-select" aria-label="" class="lang-select">
                         <option value="pt">🇧🇷 PT</option>
                         <option value="en">🇬🇧 EN</option>
                         <option value="es">🇪🇸 ES</option>
                     </select>
+                    <button id="theme-toggle" aria-label="" class="theme-toggle">
+                        <i class="fas fa-moon icon-dark"></i>
+                        <i class="fas fa-sun icon-light"></i>
+                    </button>
                 </div>
-                <img class="site-banner" src="https://i.imgur.com/BMJVhAE.png" alt="Portal SAMP Banner"
-                    onerror="this.style.display='none'">
             </div>
         </header>
 
         <main>
-            <section class="panel">
-                <div class="controls">
-                    <button id="analyzeBtn">Analisar</button>
-                    <button id="clearBtn" class="secondary">Limpar</button>
-                    <div style="flex:1"></div>
-                    <div class="status" id="status"></div>
+            <section class="panel input-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <i class="fas fa-code"></i>
+                        <span data-i18n="input_title">Código Original</span>
+                    </div>
+                    <div class="controls">
+                        <button id="analyze-btn" class="btn-primary" data-i18n="analyze" disabled>
+                            <i class="fas fa-play"></i>
+                            <span>Analisar</span>
+                        </button>
+                        <button id="clear-btn" class="btn-secondary" data-i18n="clear" disabled>
+                            <i class="fas fa-eraser"></i>
+                            <span>Limpar</span>
+                        </button>
+                    </div>
                 </div>
-
-                <textarea id="inputArea"
-                    placeholder=""></textarea>
+                <div class="textarea-wrapper">
+                    <textarea id="input-area" data-i18n-placeholder="input_placeholder" placeholder="Cole seu código aqui..." spellcheck="false"></textarea>
+                    <div class="line-numbers" id="input-line-numbers"></div>
+                </div>
+                <div class="panel-footer">
+                    <div class="status" id="input-status">
+                        <i class="fas fa-info-circle"></i>
+                        <span data-i18n="paste_prompt">Cole seu código e clique em Analisar</span>
+                    </div>
+                </div>
             </section>
 
-            <section class="panel">
-                <div class="controls">
-                    <div class="progress-wrap">
-                        <canvas id="progressCanvas" width="240" height="18"></canvas>
-                        <div id="progressText" class="status">0 / 0</div>
+            <section class="panel output-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <i class="fas fa-file-code"></i>
+                        <span data-i18n="output_title">Código Formatado</span>
                     </div>
-                    <div style="flex:2"></div>
-                    <button id="copyBtn" class="secondary">Copiar</button>
-                    <button id="downloadBtn" class="secondary">Baixar</button>
+                    <div class="controls">
+                        <button id="copy-btn" class="btn-secondary" data-i18n="copy" disabled>
+                            <i class="fas fa-copy"></i>
+                            <span>Copiar</span>
+                        </button>
+                        <button id="download-btn" class="btn-secondary" data-i18n="download" disabled>
+                            <i class="fas fa-download"></i>
+                            <span>Baixar</span>
+                        </button>
+                    </div>
                 </div>
-
-                <textarea id="outputArea" placeholder="" data-i18n-placeholder="outputPlaceholder" readonly></textarea>
+                <div class="textarea-wrapper">
+                    <textarea id="output-area" placeholder="" data-i18n-placeholder="output_placeholder" readonly spellcheck="false"></textarea>
+                    <div class="line-numbers" id="output-line-numbers"></div>
+                </div>
+                <div class="panel-footer">
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <div class="progress-text" id="progress-text">0 / 0</div>
+                    </div>
+                </div>
             </section>
         </main>
 
-        <div class="footer">
-            <div class="note" data-i18n="note">Detecta chaves { e } e tenta indentar corretamente. Exibe erros com a linha responsável.</div>
-            <div style="color:var(--muted);font-size:13px"><span data-i18n="footer_prefix">Por </span><a href="https://portalsamp.com/member.php?action=profile&uid=84" target="_blank" rel="noopener noreferrer"><strong>xBruno1000x</strong></a><span data-i18n="footer_suffix"> Portal SAMP — baseado em Tabulador iPs Team</span></div>
-        </div>
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="note">
+                    <i class="fas fa-lightbulb"></i>
+                    <span data-i18n="note">Detecta chaves { e } e tenta indentar corretamente. Exibe erros com a linha responsável.</span>
+                </div>
+                <div class="footer-info">
+                    <span data-i18n="footer_prefix">Por </span>
+                    <a href="https://portalsamp.com/member.php?action=profile&uid=84" target="_blank" rel="noopener noreferrer">
+                        <strong>xBruno1000x</strong>
+                    </a>
+                    <span data-i18n="footer_suffix"> Portal SAMP — baseado em Tabulador iPs Team</span>
+                </div>
+            </div>
+        </footer>
     </div>
 
-    <script src="app.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
-
 </html>
