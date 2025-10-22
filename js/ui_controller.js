@@ -230,10 +230,23 @@ class Action_Manager {
 class Notification_Manager {
     #elements;
     translator;
+    theme;
 
     constructor(elements, translator) {
         this.#elements = elements;
         this.translator = translator;
+        this.theme = null;
+    }
+
+    #Get_Swal_Theme_Config() {
+        const is_dark = !this.theme || this.theme.Get_Current_Theme() === 'dark';
+        
+        return {
+            background: is_dark ? '#000000ff' : '#ffffff',
+            color: is_dark ? '#e6eef6' : '#333333',
+            confirmButtonColor: is_dark ? '#1e90ff' : '#007bff',
+            iconColor: is_dark ? '#ff6b6b' : '#dc3545'
+        };
     }
 
     Show_Temporary_Status(message, type = 'info', duration = 2500) {
@@ -264,10 +277,16 @@ class Notification_Manager {
         if (!this.translator)
             return;
 
+        const theme_config = this.#Get_Swal_Theme_Config();
+
         Swal.fire({
             icon: 'error',
             title: this.translator.t(title_key),
-            text: this.translator.t(message_key, ...args)
+            text: this.translator.t(message_key, ...args),
+            background: theme_config.background,
+            color: theme_config.color,
+            confirmButtonColor: theme_config.confirmButtonColor,
+            iconColor: theme_config.iconColor
         });
     }
 
@@ -276,11 +295,16 @@ class Notification_Manager {
             return;
 
         const combinedMessage = `${this.translator.t(message_key_1)}\n\n${this.translator.t(message_key_2, line_number)}`;
+        const theme_config = this.#Get_Swal_Theme_Config();
 
         Swal.fire({
             icon: 'error',
             title: this.translator.t(title_key),
-            text: combinedMessage
+            text: combinedMessage,
+            background: theme_config.background,
+            color: theme_config.color,
+            confirmButtonColor: theme_config.confirmButtonColor,
+            iconColor: theme_config.iconColor
         });
     }
 }
@@ -317,6 +341,10 @@ export class UI_Controller {
         this.#textareas.translator = new_translator;
         this.#notifications.translator = new_translator;
         this.#actions.translator = new_translator;
+    }
+
+    set theme(theme_instance) {
+        this.#notifications.theme = theme_instance;
     }
 
     Apply_Static_Translations() {

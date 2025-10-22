@@ -54,6 +54,7 @@ class App {
         try {
             app.translator = await Translator.Create_And_Initialize();
             app.ui_controller.translator = app.translator;
+            app.ui_controller.theme = app.theme;
 
             app.Initialize_App();
         }
